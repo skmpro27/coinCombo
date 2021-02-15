@@ -4,9 +4,12 @@
 declare -A combo
 declare -A count
 
-combo=(["H"]=0 ["T"]=1)
+combo=(["H"]=0 ["T"]=1 ["HH"]=2 ["TT"]=3 ["HT"]=4 ["TH"]=5)
 
-count=([0]=0 [1]=0)
+for (( i=0; i<6; i+=1 ))
+do
+	count[$i]=0
+done
 
 for (( i=1; i<=20; i+=1 ))
 do
@@ -14,8 +17,16 @@ do
         count[$random]=$(( ${count[$random]}+1 ))
 done
 
-count[0]=$(( 5*${count[0]} ))
-count[1]=$(( 5*${count[1]} ))
+for (( i=1; i<=20; i+=1 ))
+do
+        random=$(( RANDOM%4+2 ))
+        count[$random]=$(( ${count[$random]}+1 ))
+done
+
+for (( i=0; i<6; i+=1 ))
+do
+	count[$i]=$(( 5*${count[$i]} ))
+done
 
 for key in ${!combo[@]}
 do
